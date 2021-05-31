@@ -3,28 +3,33 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
 	"strings"
 	"time"
-	"os"
 )
 
 var (
-	dingdingToken string	//钉钉告警url
-	podId string			//PodId
-	folder string			//日期命名文件夹
-	postfix string			//文件名的时间后缀
-	env string				//部署环境
-	projectGroup string		//项目组
-	bucketName string		//OSS bucketName
-	locaFilename string		//OOM DumpFile
+	dingdingToken string //钉钉告警url
+	podId         string //PodId
+	folder        string //日期命名文件夹
+	postfix       string //文件名的时间后缀
+	env           string //部署环境
+	projectGroup  string //项目组
+	projectArray  string //PodId切片后的数组
+	projectName   string //项目名称
+	bucketName    string //OSS bucketName
+	locaFilename  string //OOM DumpFile
 )
 
 func init() {
+	// podId = "uniondrug-pc-web-6cd649945c-8ztmp"
+	// env = "testing"
 	flag.StringVar(&podId, "k", "ops", "PodId")
 	flag.StringVar(&env, "e", "test", "ENV")
+
 	folder = time.Now().Format("20060102")
 	postfix = time.Now().Format("20060102150405")
-	locaFilename = "/dumps/oom" //正式
+	locaFilename = fmt.Sprintf("/data/apps/%s/log/java_heapdump.hprof", projectName) //正式
 }
 
 // 判断所给路径文件是否存在
@@ -39,10 +44,29 @@ func PathExists(path string) (bool, error) {
 	return false, err
 }
 
+// 获取projectName
+func GetProjectName() string {
+	projectArray := strings.Split(podId, "-")
+	return fmt.Sprintf("%s-%s-%s", projectArray[0], projectArray[1], projectArray[2])
+}
+
 func main() {
 	flag.Parse()
-	projectGroup = fmt.Sprintf(strings.Split(podId,"-")[0]) // podId: "ops-demo"
-	bucketName = fmt.Sprintf("%s-disaster",projectGroup) //正式的bucketName，如ops-disaster
+
+	// 异常处理
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Printf("panic %s\n", err)
+		}
+	}()
+
+	projectName = GetProjectName()
+	print(fmt.Sprintf("ENV: %s PROJECT: %s POD: %s JVM OOM occurs!", env, projectName, podId))
+	// projectGroup = fmt.Sprintf(strings.Split(podId, "-")[0]) // podId: "ops-demo"
+	// bucketName = fmt.Sprintf("%s-disaster", projectGroup)    //正式的bucketName，如ops-disaster
+	projectGroup = "nanjing-java"
+	bucketName = "uniondrug-k8s"
+
 	// 判断dump文件是否存在
 	exist, err := PathExists(locaFilename)
 	if err != nil {

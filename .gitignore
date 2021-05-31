@@ -4,6 +4,7 @@
 *.iws
 .idea/
 .vscode/
+.ipynb_checkpoints/
 
 # go.gitignore from https://github.com/github/gitignore/blob/master/Go.gitignore
 # Binaries for programs and plugins
