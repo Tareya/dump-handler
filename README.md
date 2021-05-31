@@ -10,7 +10,14 @@ oss文件分片，断点续传，根据podid、env自动判断上传到对应项
 ### 编译：
 
 ```
-GOOS=linux go build -ldflags="-w -s"
+1. mac 可执行
+export GO111MODULE=on && export GOPROXY="https://goproxy.cn,direct" && CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -ldflags="-w -s" -o build/`date "+%Y%m%d%H%M"`/dump-handler
+
+2. linux 可执行
+export GO111MODULE=on && export GOPROXY="https://goproxy.cn,direct" && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o build/`date "+%Y%m%d%H%M"`/dump-handler
+
+3. windows 可执行
+export GO111MODULE=on && export GOPROXY="https://goproxy.cn,direct" && CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -ldflags="-w -s" -o build/`date "+%Y%m%d%H%M"`/dump-handler
 ```
 
 ### 使用方法：
