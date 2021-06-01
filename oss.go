@@ -9,13 +9,13 @@ import (
 
 func upload() {
 	// 创建OSSClient实例。
-	client, err := oss.New("oss-cn-hangzhou-internal.aliyuncs.com", "LTAIixbWNsbuXaBc", "S1GepihHz6Bb177VsliE1pYzj5YZKz") //建议oss内网地址[需要修改]
+	client, err := oss.New("oss-cn-hangzhou.aliyuncs.com", "LTAIixbWNsbuXaBc", "S1GepihHz6Bb177VsliE1pYzj5YZKz") //建议oss内网地址[需要修改]
 	if err != nil {
 		fmt.Println("Error:", err)
 		os.Exit(-1)
 	}
 
-	objectName := fmt.Sprintf("heapdump/%s/%s/%s-%s", env, folder, podId, postfix) //正式
+	objectName := fmt.Sprintf("heapdump/%s/%s/%s/%s.%s", env, folder, podId, postfix, "hprof") //正式
 
 	// 获取存储空间。
 	bucket, err := client.Bucket(bucketName)

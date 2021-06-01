@@ -29,7 +29,8 @@ func init() {
 
 	folder = time.Now().Format("20060102")
 	postfix = time.Now().Format("20060102150405")
-	locaFilename = fmt.Sprintf("/data/apps/%s/log/java_heapdump.hprof", projectName) //正式
+	// locaFilename = fmt.Sprintf("/data/apps/%s/log/java_heapdump.hprof", projectName) //正式
+	locaFilename = fmt.Sprint("log/java_heapdump.hprof")
 }
 
 // 判断所给路径文件是否存在
