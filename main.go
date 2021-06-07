@@ -36,9 +36,11 @@ func init() {
 // 判断所给路径文件是否存在
 func PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
+	// 如果文件存在，返回true
 	if err == nil {
 		return true, nil
 	}
+	// 如果文件不存在，返回false
 	if os.IsNotExist(err) {
 		return false, nil
 	}
@@ -49,6 +51,21 @@ func PathExists(path string) (bool, error) {
 func GetProjectName() string {
 	projectArray := strings.Split(podId, "-")
 	return fmt.Sprintf("%s-%s-%s", projectArray[0], projectArray[1], projectArray[2])
+}
+
+// 删除原有dump文件
+func RemoveDumpfile(path string) {
+	os.Remove(path)
+
+	exist, err := PathExists(locaFilename)
+
+	if exist {
+		fmt.Printf("panic %s\n", err)
+		return
+	} else {
+		fmt.Printf("remove %s completely\n", path)
+		return
+	}
 }
 
 func main() {
@@ -77,6 +94,6 @@ func main() {
 	if exist {
 		alarm()
 		upload()
+		RemoveDumpfile(locaFilename)
 	}
-
 }

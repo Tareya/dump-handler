@@ -32,8 +32,8 @@ export GO111MODULE=on && export GOPROXY="https://goproxy.cn,direct" && CGO_ENABL
   - podid命名规范，示例 "uniondrug-pc-web-6cd649945c-8ztmp"，以"-"为分隔符
 - ENV
   - 部署环境，可以通过$ENV获取(提前通过deployment配置环境变量ENV到容器中)
-- OOM Dump文件路径
-  - /data/apps/${projectName}/log/java_heapdump.hprof
+- OOM Dump文件路径(相对路径，要求编译文件在构建docker镜像时，直接上传至workspace中)
+  - log/java_heapdump.hprof
 
 
 ### 参考文档
