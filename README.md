@@ -36,5 +36,36 @@ export GO111MODULE=on && export GOPROXY="https://goproxy.cn,direct" && CGO_ENABL
   - log/java_heapdump.hprof
 
 
-### 参考文档
-[处理k8s中java应用OOM时的dump文件(非preStop)](http://www.devopser.org/articles/2020/09/17/1600339403553.html)
+### 可更改变量以及作用
+
+#### main.go
+- projectGroup
+  - 项目分组，可以在有多个项目组拆分的时候定义项目组
+
+- bucketName
+  - oss bucket，用于需要拆分bucket的情况
+
+- locaFilename
+  - dump文件的路径
+
+
+#### oss.go
+- endpoint
+  - oss endpoint url，正式环境推荐是用 internal
+
+- accessKeyID
+- accessKeySecret
+  - aliyun 的 AK
+
+- objectName
+  - 上传 oss 的文件路径
+
+#### dingtalk.go
+- tokenMap
+  - dingding机器人的 token 集合，根据 projectGroup 做map
+
+- ossUrl
+  - 访问oss存储文件的路径（使用公网endpoint以便下载）
+
+- alarmMsg
+  - 发送到dingding机器人的消息体，markdown格式
