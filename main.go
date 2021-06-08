@@ -22,14 +22,12 @@ var (
 )
 
 func init() {
-	// podId = "uniondrug-pc-web-6cd649945c-8ztmp"
-	// env = "testing"
+
 	flag.StringVar(&podId, "k", "ops", "PodId")
 	flag.StringVar(&env, "e", "test", "ENV")
 
 	folder = time.Now().Format("20060102")
 	postfix = time.Now().Format("20060102150405")
-	// locaFilename = fmt.Sprintf("/data/apps/%s/log/java_heapdump.hprof", projectName) //正式
 	locaFilename = fmt.Sprint("log/java_heapdump.hprof")
 }
 
@@ -82,6 +80,7 @@ func main() {
 	print(fmt.Sprintf("ENV: %s PROJECT: %s POD: %s JVM OOM occurs!", env, projectName, podId))
 	// projectGroup = fmt.Sprintf(strings.Split(podId, "-")[0]) // podId: "ops-demo"
 	// bucketName = fmt.Sprintf("%s-disaster", projectGroup)    //正式的bucketName，如ops-disaster
+
 	projectGroup = "nanjing-java"
 	bucketName = "uniondrug-k8s"
 
